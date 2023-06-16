@@ -1,2 +1,2 @@
-# Motor-Position-Correction
+# Motor Position Correction
 An error correction algorithm for accurate stepper motor control
