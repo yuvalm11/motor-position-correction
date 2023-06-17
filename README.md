@@ -9,7 +9,6 @@ The system consists of a motor and an encoder, that measures the motor position 
 
 Unfortunately, the encoder and the motor shaft are slightly misaligned, resulting in deviated readings of the encoder.
 
-<br>
 
 ## Solution
 
