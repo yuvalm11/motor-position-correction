@@ -5,7 +5,6 @@
 As part of my research work at the [CBA lab](https://cba.mit.edu/), I assisted [Jake Read](https://jakeread.pages.cba.mit.edu/) in his work to develop better fabrication machines.
 
 To achieve that, we built a motor driver that allows us to use any stepper motor as a servo motor by writing the motor a target position, and not a desired amount of steps to move.
-
 The system consists of a motor and an encoder, that measures the motor position at any given time. The position values are integers from `0-16383` that represent the angle of which the motor is facing.<br>
 
 Unfortunately, the encoder and the motor shaft are slightly misaligned, resulting in deviated readings of the encoder.
