@@ -3,15 +3,52 @@
 ## Problem
 As part of my research work at the [CBA lab](https://cba.mit.edu/), I assisted [Jake Read](https://jakeread.pages.cba.mit.edu/) in his work to develop better fabrication machines.
 
-To achieve that, we built a motor driver that allows us to use any stepper motor as a servo motor by writing the motor a target position, and not a desired amount of steps to move.
-The system consists of a motor and an encoder, that measures the motor position at any given time. The position values are integers from `0-16383` that represent the angle of which the motor is facing.<br>
+We wanted to achieve absolute positioning of stepper motors so we used an encoder that measures the motor position at any given time. The position values are integers from `0-16383` that represent the angle of which the motor is facing.
 
-Unfortunately, the encoder and the motor shaft are slightly misaligned, resulting in deviated readings of the encoder.
+Unfortunately, the encoder and the motor shaft are slightly misaligned, resulting in deviated readings of the encoder. This misalignment causes non-linear position readings and inconsistent motion.
 
-<br>
+## Overview
+The algorithm fits a function using Fourier analysis on the deviation of the encoder readings from the expected sawtooth pattern and uses this function to build a lookup table that is later used by the motor firmware.
 
-## Solution
-This algorithm fix this issue by comparing the encoder readings to a perfect sawtooth, fitting a function to this deviation, and creating a lookup table for the motor firmware such that a target position can be translated into the actual motor shaft angle, and not the misaligned encoder value.
+The algorithm was tested on a real system and produced a smooth and consistent motion. The improvement was significant enough to be audible - the 'wobbly' motion without the algorithm was replaced by clean, precise movement.
 
-The was tested on a real system and produced a smooth and consistent motion.<br>
-The effect was noticeable enough and it was possible to hear the difference between the 'wabbly' motion without the algorithm and the clean movement with it. 
+## Implementation
+As seen below, the encoder readings deviate from the expected sawtooth pattern of a smooth consistent motor rotation.
+
+![Encoder readings](images/encoder_readings.png)
+
+First, we smooth the data using a simpler moving average filter and remove the DC offset to center the data around zero.
+
+![Smoothed encoder readings](images/smoothed_encoder_readings.png)
+
+We then analyze the most prominent frequencies in the data using Fourier analysis to fit a function to the deviation signal.
+
+![F1](images/f1.png)
+\
+![F2](images/f2.png)
+\
+![F3](images/f3.png)
+\
+![F4](images/f4.png)
+\
+![F5](images/f5.png)
+\
+![F6](images/f6.png)
+
+The resulting function fits the deviation signal almost perfectly, as seen below.
+
+![Fitted function](images/fitted_function.png)
+
+And with all periods stacked over each other.
+
+![All periods](images/all_periods.png)
+
+We can now use this function to correct the encoder readings to the expected sawtooth pattern.
+
+![Corrected encoder readings](images/corrected.png)
+
+And finally we build a lookup table that is later used by the motor firmware that maps the encoder readings to the correct motor position.
+
+![Lookup table](images/lut.png)
+
+
