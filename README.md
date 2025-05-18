@@ -23,17 +23,7 @@ First, we smooth the data using a simpler moving average filter and remove the D
 
 We then analyze the most prominent frequencies in the data using Fourier analysis to fit a function to the deviation signal.
 
-![F1](images/f1.png)
-\
-![F2](images/f2.png)
-\
-![F3](images/f3.png)
-\
-![F4](images/f4.png)
-\
-![F5](images/f5.png)
-\
-![F6](images/f6.png)
+![Frequencies](images/freqs.png)
 
 The resulting function fits the deviation signal almost perfectly, as seen below.
 
