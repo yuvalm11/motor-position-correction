@@ -1,4 +1,4 @@
-# Motor Position Correction
+# Fourier Analysis For Motor Position
 ## Problem
 As part of my research work at the [CBA lab](https://cba.mit.edu/), I assisted [Jake Read](https://jakeread.pages.cba.mit.edu/) in his work to develop better fabrication machines.
 
